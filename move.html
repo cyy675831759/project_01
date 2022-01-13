@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .denglu {
+            text-align: center;
+            font-size: 50px;
+            cursor: pointer;
+        }
+        .login {
+            display: none;
+            width: 512px;
+            height: 280px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            background-color: #fff;
+            border: #ebebeb solid 1px;
+            /* Z-index 仅能在定位元素上奏效（例如 position:absolute;）！ */
+            z-index: 1;
+        }
+        .guanbi {
+            position: absolute;
+            right: -20px;
+            top: -30px;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            background-color: tomato;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .login span {
+            display: block;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 25px;
+            margin-bottom: 10px;
+            cursor: move;
+        }
+        .username {
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .left {
+            float: left;
+            width: 90px;
+            padding-right: 10px;
+            text-align: right;
+            line-height: 35px;
+            height: 35px;
+            font-size: 14px;
+        }
+        .username input {
+            float: left;
+            line-height: 35px;
+            height: 35px;
+            width: 350px;
+            border: #ebebeb 1px solid;
+
+        }
+        .botbox {
+            width: 200px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 14px;
+            border: #ebebeb 1px solid;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+        }
+        .bigbox {
+            display: none;
+            width: 100%;
+            height: 100%;
+            /* position: fixed;
+            top: 0px;
+            left: 0px; */
+            background: rgba(0, 0, 0, .3);
+        }
+    </style>
+</head>
+<body>
+    <div class="denglu">点击登录</div>
+    <div class="login">
+        <div class="guanbi">关闭</div>
+        <span>登陆会员</span>
+        <div class="username">
+            <div class="left">用户名 :</div>
+            <input type="text" placeholder="请输入用户名" name="" id="">
+        </div>
+        <div class="username">
+            <div class="left">登陆密码 :</div>
+            <input type="text" placeholder="请输入登陆密码" name="" id="">
+        </div>
+        <div class="botbox">登陆会员</div>
+    </div>
+    <!-- 遮盖层 -->
+    <div class="bigbox"></div>
+
+
+    
+    <script>
+        var denglu = document.querySelector(".denglu");
+        var login = document.querySelector('.login');
+        var guanbi = document.querySelector('.guanbi');
+        var span = document.querySelector('span');
+        var bigbox = document.querySelector('.bigbox')
+        denglu.addEventListener('click',function(){
+            login.style.display = 'block';
+            bigbox.style.display = 'block';
+        })
+        guanbi.addEventListener('click',function(){
+            login.style.display = 'none';
+            bigbox.style.display = 'none';
+        })
+        span.addEventListener('mousedown',function(e){//鼠标按下的时候，得到鼠标在盒子里面的坐标
+            var x=e.pageX-login.offsetLeft;
+            var y=e.pageY-login.offsetTop;
+            document.addEventListener('mousemove',move);//鼠标移动的时候，得到模态框的坐标
+            function move(e) {
+                login.style.left = e.pageX - x +'px';
+                login.style.top = e.pageY - y + 'px';
+            }
+            document.addEventListener("mouseup",function(){//鼠标弹起的时候，解除鼠标移动事件
+                document.removeEventListener("mousemove",move)
+            })
+        })
+    </script>
+</body>
+</html>
